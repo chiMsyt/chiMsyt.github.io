@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timothy Ting</title>
+<meta name="description" content="Virtual assistant for admin, operations and workflow automation. Part-time, remote, based in the Philippines.">
+<meta name="author" content="Timothy Ting">
+
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Timothy Ting">
+<meta property="og:description" content="Virtual assistant for admin, operations and workflow automation. Part-time, remote, based in the Philippines.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+<style>
+  /* ---- Light palette (also the un-stamped default) ---- */
+  :root {
+    --paper:      #F6F8F7;
+    --surface:    #FFFFFF;
+    --ink:        #101618;
+    --ink-soft:   #47585B;
+    --ink-faint:  #7B8C8E;
+    --rule:       #DCE3E1;
+    --rule-soft:  #E9EEEC;
+    --accent:     #0E6153;
+    --accent-dim: #E3EFEB;
+    --flag:       #9A5B14;
+
+    --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --f-body:    "Newsreader", Georgia, "Times New Roman", serif;
+    --f-mono:    "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+    --measure: 66ch;
+    --rail: 11rem;
+
+    color-scheme: light dark;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0D1113;
+      --surface:    #141A1C;
+      --ink:        #E8EEEC;
+      --ink-soft:   #A3B4B4;
+      --ink-faint:  #748586;
+      --rule:       #26302F;
+      --rule-soft:  #1C2426;
+      --accent:     #4FB39D;
+      --accent-dim: #16302B;
+      --flag:       #D69A4C;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:      #0D1113;
+    --surface:    #141A1C;
+    --ink:        #E8EEEC;
+    --ink-soft:   #A3B4B4;
+    --ink-faint:  #748586;
+    --rule:       #26302F;
+    --rule-soft:  #1C2426;
+    --accent:     #4FB39D;
+    --accent-dim: #16302B;
+    --flag:       #D69A4C;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  img { max-width: 100%; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4.5rem) clamp(1.15rem, 4vw, 3rem) 5rem;
+  }
+
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ---------- masthead ---------- */
+  .masthead { border-bottom: 2px solid var(--ink); padding-bottom: 1.6rem; }
+
+  .name {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: clamp(2.1rem, 6.5vw, 3.4rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .role {
+    font-family: var(--f-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0.75rem 0 0;
+  }
+
+  .thesis {
+    max-width: var(--measure);
+    font-size: 1.14rem;
+    color: var(--ink-soft);
+    margin: 1.15rem 0 0;
+    text-wrap: pretty;
+  }
+
+  /* ---------- data strip ---------- */
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 0;
+    margin: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .cell {
+    padding: 1.05rem 1.15rem 1.15rem 0;
+    border-right: 1px solid var(--rule-soft);
+  }
+  .cell:last-child { border-right: 0; }
+  .cell dt {
+    font-family: var(--f-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 0.4rem;
+  }
+  .cell dd {
+    margin: 0;
+    font-family: var(--f-mono);
+    font-size: 0.93rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+  .cell dd small {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--ink-faint);
+    letter-spacing: 0;
+    margin-top: 0.15rem;
+  }
+
+  /* ---------- ruled sections with label rail ---------- */
+  .section {
+    display: grid;
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+    gap: 0 2.5rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section > h2 {
+    font-family: var(--f-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0.35rem 0 0;
+    align-self: start;
+  }
+  .body > * + * { margin-top: 1.15rem; }
+  .body p { max-width: var(--measure); margin-block: 0; text-wrap: pretty; }
+
+  @media (max-width: 46rem) {
+    .section { grid-template-columns: 1fr; gap: 0.9rem; }
+    .section > h2 { margin-top: 0; }
+    .cell { border-right: 0; padding-right: 0; }
+  }
+
+  /* ---------- entries ---------- */
+  .entry + .entry { margin-top: 2.4rem; padding-top: 2.4rem; border-top: 1px solid var(--rule-soft); }
+
+  .entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.55rem 0.8rem;
+  }
+  .entry-title {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.32rem;
+    letter-spacing: -0.012em;
+    margin: 0;
+    line-height: 1.25;
+  }
+  .when {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+  }
+
+  .tag {
+    font-family: var(--f-mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid currentColor;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .tag.live { background: var(--accent-dim); }
+  .tag.wip { color: var(--flag); }
+
+  .role-line {
+    font-family: var(--f-mono);
+    font-size: 0.73rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+    margin: 0.5rem 0 0;
+  }
+
+  /* ---------- metric row ---------- */
+  .metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin: 1.3rem 0 0;
+    border-top: 1px solid var(--rule-soft);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .metric {
+    flex: 1 1 7rem;
+    padding: 0.8rem 1rem 0.85rem 0;
+  }
+  .metric b {
+    display: block;
+    font-family: var(--f-mono);
+    font-size: 1.22rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .metric span {
+    display: block;
+    font-family: var(--f-mono);
+    font-size: 0.61rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 0.3rem;
+  }
+
+  /* ---------- ruled definition list ---------- */
+  .rows { margin: 0; }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
+    gap: 0.35rem 1.75rem;
+    padding: 0.9rem 0;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .row:first-child { border-top: 0; padding-top: 0; }
+  .row dt {
+    font-family: var(--f-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    padding-top: 0.16rem;
+  }
+  .row dd { margin: 0; color: var(--ink-soft); font-size: 0.98rem; }
+  @media (max-width: 34rem) {
+    .row { grid-template-columns: 1fr; }
+  }
+
+  code {
+    font-family: var(--f-mono);
+    font-size: 0.88em;
+  }
+
+  ul.plain { margin: 0; padding-left: 1.1rem; max-width: var(--measure); }
+  ul.plain li { margin-top: 0.4rem; color: var(--ink-soft); }
+  ul.plain li::marker { color: var(--ink-faint); }
+
+  .note {
+    font-size: 0.93rem;
+    color: var(--ink-faint);
+    border-left: 2px solid var(--rule);
+    padding-left: 0.95rem;
+    max-width: var(--measure);
+  }
+
+  /* ---------- contact ---------- */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: 1.4rem 2rem;
+    margin: 0;
+  }
+  .contact-grid dt {
+    font-family: var(--f-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.3rem;
+  }
+  .contact-grid dd {
+    margin: 0;
+    font-family: var(--f-mono);
+    font-size: 0.88rem;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+
+  footer {
+    padding-top: 2rem;
+    font-family: var(--f-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <h1 class="name">Timothy Ting</h1>
+    <p class="role">Virtual Assistant · Admin, Operations &amp; Workflow Automation</p>
+    <p class="thesis">
+      I keep the boring, load-bearing parts of a business in order — inboxes, records,
+      reconciliations, recurring reports. I also build the systems that do that work, so
+      when a task repeats every week my instinct is to remove it rather than get faster at it.
+    </p>
+  </header>
+
+  <dl class="strip">
+    <div class="cell">
+      <dt>Based in</dt>
+      <dd>Philippines<small>PHT · UTC+8</small></dd>
+    </div>
+    <div class="cell">
+      <dt>Engagement</dt>
+      <dd>Part-time<small>Remote</small></dd>
+    </div>
+    <div class="cell">
+      <dt>Connection</dt>
+      <dd>313 / 623<small>Mbps down / up · Ethernet</small></dd>
+    </div>
+    <div class="cell">
+      <dt>Typing</dt>
+      <dd>108 WPM<small>97% accuracy · 60-second test</small></dd>
+    </div>
+  </dl>
+
+  <section class="section">
+    <h2>Availability</h2>
+    <div class="body">
+      <p>
+        Open to both day and night shifts. Daytime here sits inside Australian and Asian
+        business hours; nights cover United States mornings and afternoons. Whichever window
+        we agree on, I would rather commit to fixed hours and hold them than promise
+        round-the-clock availability nobody can sustain.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>What I do</h2>
+    <div class="body">
+      <dl class="rows">
+        <div class="row">
+          <dt>Inbox &amp; calendar</dt>
+          <dd>Triage against agreed rules, drafted replies awaiting your approval, scheduling across timezones, and a filter system so the inbox stays sorted without me in it.</dd>
+        </div>
+        <div class="row">
+          <dt>Data &amp; records</dt>
+          <dd>Cleaning messy exports, deduplicating and validating lists, maintaining trackers and CRMs, and building spreadsheets that do not break when someone re-imports the raw data.</dd>
+        </div>
+        <div class="row">
+          <dt>Reporting</dt>
+          <dd>Turning scattered records into one number a decision can be made from — weekly summaries, budget-versus-actual, and dashboards built to be read in ten seconds.</dd>
+        </div>
+        <div class="row">
+          <dt>Research</dt>
+          <dd>Company and prospect research delivered as a comparison table with a recommendation and the reasoning, not a folder of links.</dd>
+        </div>
+        <div class="row">
+          <dt>Process &amp; documentation</dt>
+          <dd>Writing the SOP so the task survives me being unavailable, with owners, edge cases, and an escalation path.</dd>
+        </div>
+        <div class="row">
+          <dt>Automation</dt>
+          <dd>Removing recurring work outright where it makes sense — scheduled reports, intake pipelines, spreadsheet automation.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Selected work</h2>
+    <div class="body">
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3 class="entry-title">Hospitality Operations Platform</h3>
+          <span class="tag live">Live in production</span>
+          <span class="when">Jun 2026 — present</span>
+        </div>
+        <p class="role-line">Sole developer · Private repository</p>
+
+        <p>
+          The point-of-sale and operations system a hospitality group runs on. Billing and split
+          payments, stock, reservations, staff commissions, nightly cash reconciliation and
+          statutory tax records live in one system with a single audit trail — replacing separate
+          tills, spreadsheets and paper counts that used to be reconciled by hand every morning.
+        </p>
+
+        <div class="metrics">
+          <div class="metric"><b>Aug 2026</b><span>Went live</span></div>
+          <div class="metric"><b>3</b><span>Venues configured</span></div>
+          <div class="metric"><b>350+</b><span>Commits</span></div>
+          <div class="metric"><b>239</b><span>Test files</span></div>
+        </div>
+
+        <ul class="plain">
+          <li>Two venues run on it nightly, taking real payments; a third is provisioned and opening.</li>
+          <li>Built for staff who are not technical, working at speed on tablets during service.</li>
+          <li>Backups are restore-tested rather than assumed. Sales and audit records are never deleted.</li>
+          <li>Around 26,000 lines across 16 modules, documented and deployed end to end.</li>
+        </ul>
+
+        <p class="note">
+          Why this belongs on a virtual assistant's portfolio: it is a bookkeeping and operations
+          system. I have built the invoicing, reconciliation, discount-rule and audit-trail logic
+          that admin roles operate every day — and had to make all of it usable by people who
+          would never read a manual. It is private because it handles live payment and guest data.
+        </p>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3 class="entry-title">roSella</h3>
+          <span class="tag wip">In development</span>
+          <span class="when">Sep 2026 — present</span>
+        </div>
+        <p class="role-line">Sole developer · Discord community bot</p>
+        <p>
+          Music playback, reversible moderation with evidence snapshots, and activity tracking
+          that counts voice participation rather than message count alone.
+        </p>
+        <p class="note">
+          Listed honestly: this is pre-alpha and nothing runs yet. The full specification and
+          phase plan were written and settled before the first line of code — the same habit as
+          writing the SOP before running the process. I would rather show you an accurate
+          in-progress entry than an inflated finished one.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Skills</h2>
+    <div class="body">
+      <dl class="rows">
+        <div class="row">
+          <dt>Spreadsheets</dt>
+          <dd>Google Sheets and Excel — lookups, <code>QUERY</code>, <code>ARRAYFORMULA</code>, pivot tables, data validation, dashboards. Raw data, calculations and presentation kept in separate tabs so a re-import cannot break the output.</dd>
+        </div>
+        <div class="row">
+          <dt>Google Workspace</dt>
+          <dd>Gmail filters and label systems, Calendar across timezones, Forms, Drive structure and sharing permissions.</dd>
+        </div>
+        <div class="row">
+          <dt>Coordination</dt>
+          <dd>ClickUp and Trello. Comfortable picking up a new project tool quickly — the model is the same across all of them.</dd>
+        </div>
+        <div class="row">
+          <dt>Automation</dt>
+          <dd>n8n (self-hosted), Google Apps Script, spreadsheet automation. Familiar with Zapier and Make for client-hosted setups.</dd>
+        </div>
+        <div class="row">
+          <dt>Technical</dt>
+          <dd>Python, TypeScript, PostgreSQL, Docker, Git. Enough to automate things most assistants would have to do by hand.</dd>
+        </div>
+        <div class="row">
+          <dt>Communication</dt>
+          <dd>Fluent written and spoken English. End-of-day updates as standard: what is done, what is blocked, and what needs your decision — with a recommendation attached.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Education</h2>
+    <div class="body">
+      <div class="entry-head">
+        <h3 class="entry-title">BS Data Science and Analytics</h3>
+        <span class="when">Expected 2028</span>
+      </div>
+      <p class="role-line">Isabela State University</p>
+      <p>
+        The degree is the reason the spreadsheet and reporting work goes deeper than most
+        assistant roles require. Cleaning, structuring and interpreting data is the coursework,
+        not a side interest.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Contact</h2>
+    <div class="body">
+      <dl class="contact-grid">
+        <div>
+          <dt>Email</dt>
+          <dd><a href="mailto:timothy.gabriel.ting@gmail.com">timothy.gabriel.ting@gmail.com</a></dd>
+        </div>
+        <div>
+          <dt>Phone</dt>
+          <dd><a href="tel:+639602547464">+63 960 254 7464</a></dd>
+        </div>
+        <div>
+          <dt>LinkedIn</dt>
+          <dd><a href="https://www.linkedin.com/in/timothy-ting-95254637a">/in/timothy-ting</a></dd>
+        </div>
+        <div>
+          <dt>GitHub</dt>
+          <dd><a href="https://github.com/chiMsyt">github.com/chiMsyt</a></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <footer>Timothy Ting · Available for part-time remote engagements</footer>
+
+</div>
+
+</body>
+</html>
