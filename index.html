@@ -343,6 +343,26 @@
     text-transform: uppercase;
     color: var(--ink-faint);
   }
+
+  /* ---------- work samples ---------- */
+  .sample-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    margin: 0.85rem 0 0;
+    padding: 0;
+    list-style: none;
+    max-width: var(--measure);
+  }
+  .sample-links li { margin: 0; }
+  .sample-links a {
+    font-family: var(--f-mono);
+    font-size: 0.78rem;
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1px;
+  }
+  .sample-links a:hover { border-bottom-color: var(--accent); }
 </style>
 </head>
 <body>
@@ -481,6 +501,84 @@
           in-progress entry than an inflated finished one.
         </p>
       </article>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Work samples</h2>
+    <div class="body">
+
+      <p>
+        I have not yet run these processes for a paying client — that is exactly what I am
+        looking for. So rather than describe how I would work, here are the actual artefacts,
+        labelled honestly.
+      </p>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3 class="entry-title">Client Reporting Dashboard</h3>
+          <span class="tag">Spreadsheet</span>
+        </div>
+        <p class="role-line">Three-tab expense reporting system · Sheets / Excel</p>
+
+        <p>
+          Raw data, calculations and the report live on separate tabs, so the person entering
+          data and the person reading the report never touch the same cells. Monthly rollups
+          with <code>SUMIFS</code> and <code>EOMONTH</code>, budget-versus-actual variance,
+          dropdown validation on the category column, and conditional formatting that flags
+          overruns without anyone reading every row.
+        </p>
+
+        <ul class="sample-links">
+          <li><a href="samples/client-reporting-dashboard.xlsx">Download the workbook (.xlsx)</a></li>
+          <li><a href="https://github.com/chiMsyt/chiMsyt.github.io/blob/main/samples/README.md">Read the notes</a></li>
+        </ul>
+
+        <p class="note">
+          The decision worth asking me about: the calculations reference the data tab by whole
+          column, never by a bounded range like <code>E2:E150</code>. That is the reason a
+          re-import cannot break this report. The usual way a client spreadsheet goes wrong is
+          someone pasting fresh rows past the end of a hardcoded range, and then quietly
+          reporting a wrong number for a month. The workbook ships with a script that
+          re-computes every total independently and fails if anyone reintroduces a bounded
+          reference.
+        </p>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3 class="entry-title">Operations SOP Library</h3>
+          <span class="tag">Process documentation</span>
+        </div>
+        <p class="role-line">Three standard operating procedures</p>
+
+        <p>
+          Each one has a purpose, a named owner, a frequency, prerequisites, numbered steps,
+          an edge-case table, an escalation path, and a definition of done.
+        </p>
+
+        <ul class="sample-links">
+          <li><a href="https://github.com/chiMsyt/chiMsyt.github.io/blob/main/samples/sop-library/01-client-onboarding.md">Client onboarding</a></li>
+          <li><a href="https://github.com/chiMsyt/chiMsyt.github.io/blob/main/samples/sop-library/02-weekly-reporting.md">Weekly reporting</a></li>
+          <li><a href="https://github.com/chiMsyt/chiMsyt.github.io/blob/main/samples/sop-library/03-inbox-triage.md">Inbox triage</a></li>
+        </ul>
+
+        <p class="note">
+          The edge-case tables are the part worth reading. Anyone can write the happy path.
+          What makes an SOP useful is that it says what to do when the client will not grant
+          access, when the data source is down on report day, or when an email arrives asking
+          to change a supplier's bank details — which is the highest-loss mistake available
+          to anyone with inbox access, and the one I would rather have written down in advance
+          than improvised.
+        </p>
+      </article>
+
+      <p class="note">
+        Labelled plainly: the transaction data in the workbook is synthetic, and the SOPs are
+        written to realistic composite scenarios. None of it is redacted client work. The
+        structure and the decisions are exactly what I would ship.
+      </p>
 
     </div>
   </section>
