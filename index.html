@@ -446,7 +446,7 @@
     <h2>Selected work</h2>
     <div class="body">
 
-      <article class="entry">
+      <article class="entry" id="hop">
         <div class="entry-head">
           <h3 class="entry-title">Hospitality Operations Platform</h3>
           <span class="tag live">Live in production</span>
@@ -456,23 +456,25 @@
 
         <p>
           The point-of-sale and operations system a hospitality group runs on. Billing and split
-          payments, stock, reservations, staff commissions, nightly cash reconciliation and
-          statutory tax records live in one system with a single audit trail — replacing separate
-          tills, spreadsheets and paper counts that used to be reconciled by hand every morning.
+          payments, stock, reservations, staff commissions, cash counts and the end-of-day close,
+          and VAT and statutory discounts on every bill live in one system with a single audit
+          trail — replacing separate tills, spreadsheets and paper counts that used to be
+          reconciled by hand every morning.
         </p>
 
         <div class="metrics">
-          <div class="metric"><b>Aug 2026</b><span>Went live</span></div>
-          <div class="metric"><b>3</b><span>Venues configured</span></div>
-          <div class="metric"><b>350+</b><span>Commits</span></div>
-          <div class="metric"><b>239</b><span>Test files</span></div>
+          <div class="metric"><b>3</b><span>Venues live</span></div>
+          <div class="metric"><b>380+</b><span>Commits</span></div>
+          <div class="metric"><b>3,000+</b><span>Automated tests</span></div>
+          <div class="metric"><b>28,000+</b><span>Lines of Python</span></div>
         </div>
 
         <ul class="plain">
-          <li>Two venues run on it nightly, taking real payments; a third is provisioned and opening.</li>
+          <li>Three venues — a restaurant, a nightclub and a KTV — take real payments on it every night.</li>
           <li>Built for staff who are not technical, working at speed on tablets during service.</li>
           <li>Backups are restore-tested rather than assumed. Sales and audit records are never deleted.</li>
-          <li>Around 26,000 lines across 16 modules, documented and deployed end to end.</li>
+          <li>Caught a class of error no total can catch: complimentary bills recorded as the statutory
+              senior/PWD discount, where every figure tied and only the category was wrong.</li>
         </ul>
 
         <p class="note">
