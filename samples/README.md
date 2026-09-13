@@ -73,3 +73,74 @@ up as client work.
 
 **Timothy Ting** · timothy.gabriel.ting@gmail.com · +63 960 254 7464
 Portfolio: https://chimsyt.github.io
+
+---
+
+## Bank Reconciliation & AP/AR Workbook
+
+**Two files, one builder.**
+
+| File | What it is |
+|---|---|
+| `bank-reconciliation-ap-ar.xlsx` | The worked example. Sample data, four problems planted in it on purpose. |
+| `bank-reconciliation-TEMPLATE.xlsx` | **The one you actually use.** Same formulas, no data, pre-filled to row 604. |
+
+```bash
+uv run --with openpyxl python build-reconciliation-workbook.py   # builds both
+uv run --with openpyxl python verify-reconciliation.py           # checks the example
+```
+
+### Using the template
+
+1. Type your **opening balance** and the statement's **closing balance** into
+   `Bank!G2` and `Bank!G3`. These two cells are what make it a reconciliation
+   rather than a matching exercise.
+2. Paste bank lines into **Bank** columns A–D.
+3. Enter invoices and bills into **Ledger** columns A–F. One row per document,
+   never one row per payment.
+4. Read **Exceptions**. All zeros and a zero variance means the period is clean.
+5. **AR Aging** says who to chase. **AP Payment Run** is the week's payments —
+   filter column A for `Yes`.
+
+Every other column is a formula. Don't overwrite them.
+
+### The design decisions, and why
+
+- **Whole-column references.** A bounded range like `E2:E150` breaks silently
+  when somebody pastes a longer month — it keeps calculating and reports a wrong
+  number. The checker fails the build if one reappears.
+- **Match on amount and direction, never on description.** Bank descriptions are
+  free text the bank invents. Direction matters too: money in can only settle an
+  invoice, money out only a bill — without that, a 500 refund would happily match
+  a 500 supplier bill.
+- **Exceptions from both sides.** Bank lines with no ledger entry *and* ledger
+  entries with no bank line. Most reconciliation sheets check one direction,
+  which hides half the errors — a bill entered twice and paid once is invisible
+  from the bank side.
+- **Ambiguity is flagged, never guessed.** Two payments of the same amount can't
+  be told apart by amount alone, so the sheet says `REVIEW` and stops.
+- **No hardcoded dates.** Aging and the payment run use `TODAY()`.
+- **Formulas restricted to SUMIFS, COUNTIFS, SUMPRODUCT, IFERROR and TEXT**, so
+  it behaves identically in Google Sheets and in Excel, including older Excel
+  without XLOOKUP or dynamic arrays.
+
+### The point of the worked example
+
+The cash **agrees to the penny** — variance zero — and four transactions still
+have no explanation: a freight supplier paid twice, a merchant fee nobody
+mapped, and a deposit with no invoice behind it. A reconciliation that only
+checks the total calls that a clean month.
+
+### How it's checked
+
+`verify-reconciliation.py` never reads the workbook's own answers. It reads the
+typed columns only, recomputes every figure independently in Python, then opens
+the file in LibreOffice so the formulas actually calculate and compares the
+numbers. 23 checks.
+
+It has already caught two real bugs: a bounded range left in the dashboard, and
+a status rule that reported a duplicate payment as merely unmatched because it
+tested "unmatched" before "duplicate".
+
+**The data is synthetic and the business is invented.** This demonstrates method,
+not client work, and isn't presented as anything else.

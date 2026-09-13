@@ -517,6 +517,47 @@
 
       <article class="entry">
         <div class="entry-head">
+          <h3 class="entry-title">Bank Reconciliation &amp; AP/AR Workbook</h3>
+          <span class="tag">Spreadsheet</span>
+        </div>
+        <p class="role-line">Seven-sheet reconciliation and receivables system · Sheets / Excel</p>
+
+        <p>
+          Takes a bank statement and a ledger of invoices and bills, matches them against
+          each other, and reports what does not reconcile — <strong>from both directions</strong>.
+          It then ages the receivables and builds the week's supplier payment run from the
+          same data, so nothing is typed twice. Matching is on amount and direction, never on
+          the bank's free-text description; where two payments share an amount the sheet says
+          <code>REVIEW</code> rather than guessing which is which.
+        </p>
+
+        <ul class="sample-links">
+          <li><a href="samples/bank-reconciliation-ap-ar.xlsx">Download the worked example (.xlsx)</a></li>
+          <li><a href="samples/bank-reconciliation-TEMPLATE.xlsx">Download the blank template (.xlsx)</a></li>
+          <li><a href="https://github.com/chiMsyt/chiMsyt.github.io/blob/main/samples/verify-reconciliation.py">Read the checker</a></li>
+        </ul>
+
+        <p class="note">
+          The thing worth asking me about: in the worked example the cash <em>agrees to the
+          penny</em> — closing balance per the books equals the bank's closing balance,
+          variance zero — and four transactions still have no explanation. A double payment to
+          a freight supplier, a merchant fee nobody mapped, and a deposit with no invoice
+          behind it. A reconciliation that only checks the total calls that a clean month.
+          Agreeing and being correct are different questions, and the workbook asks both.
+        </p>
+
+        <p class="note">
+          It ships with <code>verify-reconciliation.py</code>, which never reads the workbook's
+          own answers. It reads the typed columns only, recomputes every headline figure from
+          scratch in Python, opens the file in LibreOffice so the formulas actually calculate,
+          and fails if the two disagree. It has already caught two real bugs — a bounded range
+          I left in my own dashboard, and a status rule that reported a duplicate payment as
+          merely unmatched.
+        </p>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
           <h3 class="entry-title">Client Reporting Dashboard</h3>
           <span class="tag">Spreadsheet</span>
         </div>
